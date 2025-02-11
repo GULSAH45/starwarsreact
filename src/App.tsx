@@ -8,7 +8,12 @@ import RadioButtons from "./components/filteredRadio";
 
 function App() {
   const [isShown, setIsShown] = useState<boolean>(false);
-  export const [isFiltered, setIsFiltered] = useState<string>("");
+  const [isFiltered, setIsFiltered] = useState<string>("");
+
+  function homefilterchange(homeworld: string) {
+    setIsFiltered(homeworld);
+    console.log(isFiltered);
+  }
 
   function isShownClickHandler() {
     setIsShown((prev) => !prev);
@@ -27,13 +32,18 @@ function App() {
         : UniqueCharsOfHomeworlds.map((homeworld) => (
             <div key={homeworld}>
               {" "}
-              <RadioButtons homeworld={homeworld} />
+              <RadioButtons
+                homeworld={homeworld}
+                homefilterchange={homefilterchange}
+              />
             </div>
           ))}
 
       {isShown === false
         ? ""
-        : Characters.map((character) => (
+        : Characters.filter(
+            (character) => character.homeworld?.toLowerCase() === isFiltered
+          ).map((character) => (
             <CharacterCards
               id={character.id}
               name={character.name}

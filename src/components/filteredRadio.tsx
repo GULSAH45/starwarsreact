@@ -1,12 +1,13 @@
 import Form from "react-bootstrap/Form";
-
-function RadioButtons({ homeworld }: { homeworld: string }) {
+interface RadioParams {
+  homeworld: string;
+  homefilterchange: (e: string) => void;
+}
+function RadioButtons({ homeworld, homefilterchange }: RadioParams) {
   return (
     <div key={`default-${homeworld}`} className="mb-3">
       <Form.Check
-        onChange={(e) => {
-          setIsFiltered(e.target.value);
-        }}
+        onChange={() => homefilterchange(homeworld)}
         type="radio"
         name="group1"
         id={`default-${homeworld}`}
